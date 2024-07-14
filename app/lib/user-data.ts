@@ -35,20 +35,26 @@ export async function getUsers(
 ): Promise<APIResponse<User>> {
   const response = await fetchAPI(currentPage);
 
-  if (maskEmail) {
-    response.data = response.data.map((user) => {
-      // mask the email
-      const [prefix, suffix] = user.email.split('@');
+  response.data = response.data
+    .filter(
+      ({ first_name, last_name }) =>
+        'G' === first_name[0].toUpperCase() ||
+        'W' === last_name[0].toUpperCase()
+    )
+    .map((user) => {
+      if (maskEmail) {
+        // mask the email
+        const [prefix, suffix] = user.email.split('@');
 
-      // mask prefix
-      const newPrefix = maskWord(prefix);
-      const newSuffix = maskWord(suffix);
+        // mask prefix
+        const newPrefix = maskWord(prefix);
+        const newSuffix = maskWord(suffix);
 
-      user.email = `${newPrefix}@${newSuffix}`;
+        user.email = `${newPrefix}@${newSuffix}`;
+      }
 
       return user;
     });
-  }
 
   return response;
 }
