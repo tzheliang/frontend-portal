@@ -5,6 +5,6 @@ export async function POST(request: Request): Promise<Response> {
     await destroySession();
   } catch {
   } finally {
-    return Response.redirect(new URL('/', request.url));
+    return Response.redirect(new URL('/login', request.url));
   }
 }

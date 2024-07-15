@@ -2,8 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Header() {
-  function handleLogout() {}
-
   return (
     <div className="flex flex-row flex-auto w-full h-full bg-blue-700 rounded-b-md py-4 px-6 items-center justify-between">
       <Link href="/users">
