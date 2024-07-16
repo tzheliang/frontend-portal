@@ -1,3 +1,9 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Login',
+};
+
 export default async function Login() {
   return (
     <div className="flex flex-col flex-auto items-center justify-center min-w-0">

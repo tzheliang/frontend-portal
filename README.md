@@ -10,9 +10,8 @@
 ## Project setup
 
 1. Create Next.js app using `npx create-next-app@latest`
-2. Add dependencies for Redux `npm install @reduxjs/toolkit react-redux`
-3. Add dependencies for auth `npm install lucia arctic @lucia-auth/adapter-sqlite better-sqlite3`
-4. Add dependencies for better-sqlite3 types `npm install -D @types/better-sqlite3`
+2. Add dependencies for auth `npm install lucia arctic @lucia-auth/adapter-sqlite better-sqlite3`
+3. Add dependencies for better-sqlite3 types `npm install -D @types/better-sqlite3`
 
 ## Setup steps for Google Auth
 

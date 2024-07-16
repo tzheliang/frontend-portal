@@ -14,9 +14,9 @@ export default async function UsersLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const authResult = await verifyAuthSession();
+  const { user, session } = await verifyAuthSession();
 
-  if (!authResult.user) {
+  if (!session) {
     return redirect('/error-401');
   }
 
@@ -27,7 +27,7 @@ export default async function UsersLayout({
       </div>
       <div className="flex flex-col flex-auto p-8">{children}</div>
       <div className="flex flex-row flex-grow-0">
-        <Footer footerText="Created by Zheliang" />
+        <Footer userName={user.name} />
       </div>
     </div>
   );
