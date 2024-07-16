@@ -1,10 +1,19 @@
 import { Metadata } from 'next';
+import { verifyAuthSession } from '../lib/auth';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Login',
 };
 
 export default async function Login() {
+  const { session } = await verifyAuthSession();
+
+  // should re-direct user away when they are already authenticated
+  if (session) {
+    redirect('/');
+  }
+
   return (
     <div className="flex flex-col flex-auto items-center justify-center min-w-0">
       <div className="flex flex-col justify-center items-center min-w-64">
