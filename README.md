@@ -1,5 +1,10 @@
 # Frontend Portal
 
+## Assumptions/Justifications
+
+1. Redux was not integrated. User list data is rendered server-side and is not sent to the client.
+2. Google OAuth access token is not kept after authenticating and retrieving the user profile.
+
 ## Instructions
 
 1. Install the app dependencies with `npm install`.
@@ -21,4 +26,4 @@
 4. Create a new credential, using OAuth Client ID type.
 5. Set the authorized JavaScript origins to `http://localhost` and `http://localhost:3000` respectively.
 6. Set the authorized redirect URI to `http://localhost:3000/login/google/callback`.
-7. Copied client id and client secret to app `.env` file.
+7. Copy the Google client id and client secret to app `.env` file.
