@@ -13,6 +13,8 @@
 2. Copy .env.example to .env
 3. Replace the values of `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` to a valid Google OAuth credential.
 4. (Optional) If the app needs to be accessed via domain name, replace the `http://localhost:3000` with the correct domain name. The configured URI must match the configured setting in the Google credential console.
+5. Build the project with `npm run build`.
+6. Start the project with `npm run start`.
 
 ## Project setup
 
