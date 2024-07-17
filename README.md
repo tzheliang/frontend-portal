@@ -2,7 +2,7 @@
 
 ## Assumptions/Justifications
 
-1. Redux was not integrated. User list data is rendered server-side and is not sent to the client.
+1. ~~Redux was not integrated. User list data is rendered server-side and is not sent to the client.~~Implemented Redux Toolkit to manage user list data.
 2. Google OAuth access token is not kept after authenticating and retrieving the user profile.
 3. No unit tests. With reference to [latest docs](https://nextjs.org/docs/app/building-your-application/testing/jest), Jest does not support async components.
 4. No E2E tests. I have encountered difficulties with setting up playwright to perform automated Login testing on the Google page. Tested using [this guide](https://adequatica.medium.com/google-authentication-with-playwright-8233b207b71a) however authentication could not complete.
@@ -21,6 +21,7 @@
 1. Create Next.js app using `npx create-next-app@latest`
 2. Add dependencies for auth `npm install lucia arctic @lucia-auth/adapter-sqlite better-sqlite3`
 3. Add dependencies for better-sqlite3 types `npm install -D @types/better-sqlite3`
+4. Add dependencies for Redux Toolkit `npm install @reduxjs/toolkit react-redux`
 
 ## Setup steps for Google Auth
 

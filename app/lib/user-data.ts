@@ -1,4 +1,4 @@
-import { APIResponse, User } from './types';
+import { APIResponse, APIListResponse, User } from './types';
 
 function maskWord(str: string): string {
   let masked = '';
@@ -14,7 +14,7 @@ function maskWord(str: string): string {
   return masked;
 }
 
-async function fetchAPI(page: number) {
+async function fetchUserList(page: number = 1): Promise<User[]> {
   const url = new URL('https://reqres.in/api/users');
   const pageSize = 6;
 
@@ -25,36 +25,70 @@ async function fetchAPI(page: number) {
 
   if (!res.ok) throw new Error('API failed to load');
 
-  const responseData: APIResponse<User> = await res.json();
-  return responseData;
+  const responseData: APIListResponse<User> = await res.json();
+
+  let users: User[] = [...responseData.data];
+
+  if (responseData.page < responseData.total_pages) {
+    const moreUsers = await fetchUserList(page + 1);
+    users = [...users, ...moreUsers];
+  }
+
+  return users;
 }
 
-export async function getUsers(
-  currentPage: number = 1,
-  maskEmail: boolean = false
-): Promise<APIResponse<User>> {
-  const response = await fetchAPI(currentPage);
+async function fetchUser(userId: string): Promise<User> {
+  const url = new URL(`https://reqres.in/api/users/${userId}`);
 
-  response.data = response.data
+  const res = await fetch(url.toString(), { method: 'GET' });
+
+  if (!res.ok) throw new Error('API failed to load');
+
+  const { data: user }: APIResponse<User> = await res.json();
+
+  return user;
+}
+
+export async function getUsers(): Promise<User[]> {
+  const users = await fetchUserList();
+
+  // mask it by default if get from list
+  return users
     .filter(
       ({ first_name, last_name }) =>
         'G' === first_name[0].toUpperCase() ||
         'W' === last_name[0].toUpperCase()
     )
     .map((user) => {
-      if (maskEmail) {
-        // mask the email
-        const [prefix, suffix] = user.email.split('@');
+      // mask the email
+      const [prefix, suffix] = user.email.split('@');
 
-        // mask prefix
-        const newPrefix = maskWord(prefix);
-        const newSuffix = maskWord(suffix);
+      // mask prefix
+      const newPrefix = maskWord(prefix);
+      const newSuffix = maskWord(suffix);
 
-        user.email = `${newPrefix}@${newSuffix}`;
-      }
+      user.email = `${newPrefix}@${newSuffix}`;
 
       return user;
     });
+}
 
-  return response;
+export async function getUser(
+  userId: string,
+  maskEmail: boolean = true
+): Promise<User> {
+  const user = await fetchUser(userId);
+
+  if (maskEmail) {
+    // mask the email
+    const [prefix, suffix] = user.email.split('@');
+
+    // mask prefix
+    const newPrefix = maskWord(prefix);
+    const newSuffix = maskWord(suffix);
+
+    user.email = `${newPrefix}@${newSuffix}`;
+  }
+
+  return user;
 }

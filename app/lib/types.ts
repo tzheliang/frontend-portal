@@ -6,12 +6,20 @@ export interface User {
   avatar: string;
 }
 
-export interface APIResponse<T> {
+export interface APIListResponse<T> {
   page: number;
   per_page: number;
   total: number;
   total_pages: number;
   data: T[];
+  support: {
+    url: string;
+    text: string;
+  };
+}
+
+export interface APIResponse<T> {
+  data: T;
   support: {
     url: string;
     text: string;
